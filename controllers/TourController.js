@@ -46,7 +46,7 @@ try {
 }
 export const removeTour = async (req, res) => {
   try {
-      await TourModel.findOneAndDelete({
+      TourModel.findOneAndDelete({
           _id: req.params.id
       }, (err, doc) => {
           if (err) {
@@ -70,6 +70,42 @@ export const removeTour = async (req, res) => {
       console.log(e)
       res.status(500).json({
           message: "Tour not deleted"
+      })
+  }
+}
+export const updateTour = async (req, res) => {
+  try {
+      const tourId = req.params.id
+      TourModel.findByIdAndUpdate(tourId, {
+          dateTour: req.body.dateTour,
+          service: req.body.service,
+          pickUpTime: req.body.pickUpTime,
+          hotel: req.body.hotel,
+          guide: req.body.guide,
+          agent: req.body.agent,
+          tourDescription: req.body.tourDescription,
+          user: req.userId,
+      }, (err, doc) => {
+          if (err) {
+              console.log(err)
+              return res.status(500).json({
+                  message: 'Tour not update'
+              })
+          }
+          if (!doc) {
+              console.log(err)
+              return res.status(501).json({
+                  message: 'Tour not found'
+              })
+          }
+          res.json({
+              success: true
+          })
+      })
+  } catch (e) {
+      console.log(e)
+      res.status(500).json({
+          message: "Tour not update"
       })
   }
 }

@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const tourValidation = [
+export const tourAddValidation = [
     body('dateTour', 'Incorrect tour data').isDate(),
     body('service', 'Min length 3').isLength({min: 3}),
     body('pickUpTime', 'Incorrect tour pickUp time').isDate(),
